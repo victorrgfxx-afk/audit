@@ -6,21 +6,21 @@
 <meta name="robots" content="noindex,nofollow">
 <meta name="theme-color" content="#0a0b1a">
 <title>Audit Instagram & TikTok — S&V Agency</title>
-<meta name="description" content="Răspunzi în 3 minute și primești auditul conturilor tale de Instagram și TikTok: ce te trage în jos și ce schimbi primul.">
+<meta name="description" content="Trimite câteva capturi de ecran și primești auditul contului tău de Instagram sau TikTok: ce merge, ce nu și ce schimbi primul.">
 <style>
 :root{
   --bg:#070818; --ink:#f4f5ff; --ink-2:rgba(244,245,255,.72); --ink-3:rgba(244,245,255,.5);
   --edge:rgba(255,255,255,.18); --edge-2:rgba(255,255,255,.1);
   --glass:rgba(255,255,255,.07); --glass-2:rgba(255,255,255,.12);
   --accent:linear-gradient(135deg,#5eead4,#818cf8 52%,#f472b6);
-  --ok:#5eead4; --err:#fda4af; --r:18px;
+  --ok:#5eead4; --err:#fda4af;
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%;background:var(--bg)}
 body{margin:0;min-height:100vh;min-height:100svh;color:var(--ink);background:var(--bg);
   font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;-webkit-tap-highlight-color:transparent;overscroll-behavior-y:none}
 [hidden]{display:none!important}
-/* fundal: trei pete de lumină, statice — pe telefon nimic nu se animă în spate */
+/* fundal static: pe telefon nu se animă nimic în spate */
 .fundal{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
 .fundal i{position:absolute;border-radius:50%;filter:blur(70px);opacity:.55}
 .fundal i:nth-child(1){width:70vmax;height:70vmax;left:-25vmax;top:-30vmax;background:radial-gradient(circle,#4f46e5,transparent 62%)}
@@ -39,59 +39,65 @@ main{position:relative;z-index:1;width:min(680px,100%);margin:0 auto;padding:max
 h1{font-size:clamp(28px,6vw,42px);line-height:1.12;letter-spacing:-.03em;margin:0 0 12px}
 h1 em{font-style:normal;background:var(--accent);-webkit-background-clip:text;background-clip:text;color:transparent}
 h2{font-size:clamp(22px,4.6vw,30px);letter-spacing:-.02em;margin:0 0 6px}
+h3{font-size:17px;margin:0;letter-spacing:-.01em}
 .sub{color:var(--ink-2);margin:0 0 22px}
 .mic{font-size:13.5px;color:var(--ink-3)}
 .pilule{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 26px}
 .pilule span{font-size:13.5px;padding:7px 12px;border-radius:99px;background:var(--glass);border:1px solid var(--edge-2);color:var(--ink-2)}
+/* alegerea platformei */
+.platforme{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.plat{font:inherit;color:var(--ink);cursor:pointer;touch-action:manipulation;border-radius:20px;padding:22px 16px;border:1px solid var(--edge-2);
+  background:var(--glass);display:flex;flex-direction:column;align-items:center;gap:8px;font-size:17px;font-weight:650}
+.plat span{font-size:34px;line-height:1}
+.plat[aria-pressed=true]{background:linear-gradient(140deg,rgba(94,234,212,.3),rgba(129,140,248,.3) 55%,rgba(244,114,182,.26));border-color:rgba(255,255,255,.55)}
+/* zonele de capturi */
+.zona{padding:16px;border-radius:20px;background:rgba(0,0,0,.18);border:1px solid var(--edge-2);margin:0 0 14px}
+.zona.invalid{border-color:var(--err)}
+.zona-cap{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.contor{font-size:13.5px;color:var(--ink-2);white-space:nowrap}
+.zona .ce{font-size:14px;color:var(--ink-2);margin:6px 0 12px}
+.adauga{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:52px;border-radius:14px;cursor:pointer;touch-action:manipulation;
+  border:1.5px dashed var(--edge);background:var(--glass);color:var(--ink);font-weight:600;font-size:15px}
+.adauga input{display:none}
+.adauga.plin{opacity:.45;pointer-events:none}
+.capturi{display:grid;grid-template-columns:repeat(auto-fill,minmax(64px,1fr));gap:8px;margin-top:10px}
+.captura{position:relative;aspect-ratio:9/16;border-radius:10px;overflow:hidden;border:1px solid var(--edge-2);background:rgba(0,0,0,.3)}
+.captura img{width:100%;height:100%;object-fit:cover;display:block}
+.captura b{position:absolute;left:4px;bottom:4px;font-size:11px;padding:1px 6px;border-radius:99px;background:rgba(0,0,0,.65)}
+.captura button{position:absolute;top:3px;right:3px;width:24px;height:24px;border-radius:99px;border:0;background:rgba(0,0,0,.7);color:#fff;font-size:15px;line-height:1;cursor:pointer}
+.eroare{color:var(--err);font-size:13.5px;margin:8px 2px 0}
+/* date de contact */
 .camp{margin:0 0 16px}
-.camp>label,.camp>.eticheta{display:block;font-size:14px;font-weight:600;color:var(--ink-2);margin:0 0 7px 2px}
+.camp>label{display:block;font-size:14px;font-weight:600;color:var(--ink-2);margin:0 0 7px 2px}
 .camp .opt{font-weight:400;color:var(--ink-3)}
-input[type=text],input[type=email],input[type=tel],input[type=url],textarea{width:100%;font:inherit;font-size:16px;color:var(--ink);
-  padding:13px 15px;border-radius:14px;border:1px solid var(--edge);background:rgba(0,0,0,.22);outline:none;transition:border-color .2s,box-shadow .2s}
-textarea{min-height:92px;resize:vertical}
-input:focus,textarea:focus{border-color:rgba(167,139,250,.9);box-shadow:0 0 0 4px rgba(167,139,250,.2)}
-input::placeholder,textarea::placeholder{color:var(--ink-3)}
-.chips{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
-.chip,.seg button{font:inherit;font-size:14.5px;color:var(--ink);text-align:left;cursor:pointer;touch-action:manipulation;
-  min-height:46px;padding:10px 13px;border-radius:14px;border:1px solid var(--edge-2);background:var(--glass);display:flex;align-items:center;gap:8px}
-.chip[aria-pressed=true],.seg button[aria-pressed=true]{background:linear-gradient(140deg,rgba(94,234,212,.3),rgba(129,140,248,.3) 55%,rgba(244,114,182,.26));border-color:rgba(255,255,255,.55)}
-.seg{display:flex;flex-wrap:wrap;gap:6px}
-.seg button{flex:1 1 auto;justify-content:center;text-align:center;min-width:72px}
+input[type=text],input[type=email]{width:100%;font:inherit;font-size:16px;color:var(--ink);padding:13px 15px;border-radius:14px;
+  border:1px solid var(--edge);background:rgba(0,0,0,.22);outline:none;transition:border-color .2s,box-shadow .2s}
+input:focus{border-color:rgba(167,139,250,.9);box-shadow:0 0 0 4px rgba(167,139,250,.2)}
+input::placeholder{color:var(--ink-3)}
+.camp.invalid input,.bifa.invalid{border-color:var(--err)!important}
 .bifa{display:flex;gap:12px;align-items:flex-start;padding:13px 14px;border-radius:14px;background:var(--glass);border:1px solid var(--edge-2);cursor:pointer;touch-action:manipulation}
 .bifa input{width:22px;height:22px;margin:1px 0 0;flex:none;accent-color:#818cf8}
 .bifa span{font-size:14.5px;color:var(--ink-2)}
-.platforma{display:flex;align-items:center;gap:10px;margin:0 0 4px}
-.platforma .ico{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;font-size:18px;background:var(--glass-2);border:1px solid var(--edge-2)}
-.nu-am{margin:6px 0 18px}
-.eroare{color:var(--err);font-size:13.5px;margin:6px 2px 0;min-height:0}
-.invalid input,.invalid textarea,.invalid .chips,.invalid .seg,.invalid.bifa{border-color:var(--err)!important}
-.zona{display:block;padding:22px 16px;border-radius:18px;border:1.5px dashed var(--edge);background:rgba(0,0,0,.18);text-align:center;cursor:pointer;touch-action:manipulation}
-.zona b{display:block;font-size:16px;margin-bottom:4px}
-.zona input{display:none}
-.capturi{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:10px;margin-top:12px}
-.captura{position:relative;aspect-ratio:9/16;border-radius:12px;overflow:hidden;border:1px solid var(--edge-2);background:rgba(0,0,0,.3)}
-.captura img{width:100%;height:100%;object-fit:cover;display:block}
-.captura button{position:absolute;top:5px;right:5px;width:28px;height:28px;border-radius:99px;border:0;background:rgba(0,0,0,.65);color:#fff;font-size:16px;cursor:pointer}
-.cum{margin:14px 0 0;padding:14px 16px;border-radius:14px;background:var(--glass);border:1px solid var(--edge-2);font-size:14px;color:var(--ink-2)}
-.cum b{color:var(--ink)}
-.cum p{margin:4px 0}
+/* butoane */
 .actiuni{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:26px}
 .btn{font:inherit;font-weight:650;font-size:16px;cursor:pointer;touch-action:manipulation;border-radius:99px;padding:14px 24px;border:0}
 .btn-p{color:#fff;background:var(--accent);box-shadow:0 14px 34px -14px rgba(129,140,248,.9)}
 .btn-p[disabled]{opacity:.55;cursor:progress}
 .btn-g{background:transparent;color:var(--ink-2);padding:14px 10px}
+.btn-s{background:var(--glass-2);color:var(--ink);border:1px solid var(--edge)}
+/* încărcarea */
+.incarcare{margin-top:18px}
+.incarcare .bara{margin:8px 0 0}
 .toast{position:fixed;left:50%;bottom:max(20px,env(safe-area-inset-bottom));transform:translate(-50%,160%);z-index:20;max-width:calc(100% - 32px);
   padding:12px 18px;border-radius:99px;background:rgba(20,20,40,.92);border:1px solid var(--edge);font-size:14.5px;transition:transform .35s ease}
 .toast.arata{transform:translate(-50%,0)}
 .gata{text-align:center}
 .gata .bulina{width:84px;height:84px;margin:6px auto 18px;border-radius:50%;display:grid;place-items:center;font-size:38px;background:var(--glass-2);border:1px solid var(--edge)}
-.gata ol{text-align:left;margin:18px 0 0;padding-left:20px;color:var(--ink-2)}
+.gata ol{text-align:left;margin:18px 0 22px;padding-left:20px;color:var(--ink-2)}
 .gata li{margin:6px 0}
 @media (max-width:560px){
   .card{border-radius:22px;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
   .fundal i{filter:blur(50px)}
-  .chips{grid-template-columns:1fr 1fr}
-  .chip{font-size:14px;min-height:44px}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
@@ -102,7 +108,7 @@ input::placeholder,textarea::placeholder{color:var(--ink-3)}
 <section class="card">
   <div class="sus">
     <div class="brand"><b aria-hidden="true"></b>S&V Agency</div>
-    <div class="progres" id="progres" hidden>1/6</div>
+    <div class="progres" id="progres" hidden>1/4</div>
   </div>
   <div class="bara" id="bara" hidden><span></span></div>
 
@@ -111,94 +117,64 @@ input::placeholder,textarea::placeholder{color:var(--ink-3)}
 
   <!-- 0 · bun venit -->
   <div class="pas" data-pas="0">
-    <h1>Audit gratuit pentru <em>Instagram</em> și <em>TikTok</em></h1>
-    <p class="sub">Răspunzi la câteva întrebări, pui 2-3 capturi din statistici și primești auditul conturilor tale: ce te trage în jos și ce schimbi primul.</p>
-    <div class="pilule"><span>⏱ 3-4 minute</span><span>🔒 confidențial</span><span>📩 rezultatul pe email</span></div>
-    <button type="button" class="btn btn-p" data-urmator>Începem →</button>
+    <h1>Audit gratuit pentru <em>Instagram</em> sau <em>TikTok</em></h1>
+    <p class="sub">Fără întrebări de completat: faci câteva capturi de ecran și le pui aici. Din ele vedem ce merge, ce nu și ce schimbi primul.</p>
+    <div class="pilule"><span>📸 doar capturi</span><span>⏱ 5 minute</span><span>🔒 confidențial</span></div>
+    <button type="button" class="btn btn-p" id="incepe">Începem →</button>
   </div>
 
-  <!-- 1 · despre tine -->
+  <!-- 1 · platforma -->
   <div class="pas" data-pas="1" hidden>
-    <h2>Despre tine</h2>
-    <p class="sub">Ca să știm cui îi pregătim auditul.</p>
-    <div class="camp"><label for="nume_persoana">Numele tău</label><input id="nume_persoana" name="nume_persoana" type="text" autocomplete="name" placeholder="ex. Andreea Popescu" required><p class="eroare"></p></div>
-    <div class="camp"><label for="nume_firma">Firma <span class="opt">(dacă ai)</span></label><input id="nume_firma" name="nume_firma" type="text" autocomplete="organization" placeholder="ex. Clinica Zâmbet"></div>
-    <div class="camp"><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="nume@firma.ro" required><p class="eroare"></p></div>
-    <div class="camp"><label for="telefon">Telefon <span class="opt">(opțional)</span></label><input id="telefon" name="telefon" type="tel" autocomplete="tel" inputmode="tel" placeholder="07xx xxx xxx"></div>
-    <div class="camp"><span class="eticheta">Domeniul</span><div class="chips" data-alegere="domeniu" data-unul></div></div>
-    <div class="camp"><label for="oras">Orașul / zona</label><input id="oras" name="oras" type="text" autocomplete="address-level2" placeholder="ex. Ploiești"></div>
+    <h2>Ce cont analizăm?</h2>
+    <p class="sub">Unul pe rând. Dacă le ai pe amândouă, îl trimiți pe al doilea la final, dintr-o atingere.</p>
+    <div class="platforme">
+      <button type="button" class="plat" data-platforma="instagram" aria-pressed="false"><span>📸</span>Instagram</button>
+      <button type="button" class="plat" data-platforma="tiktok" aria-pressed="false"><span>🎵</span>TikTok</button>
+    </div>
+    <p class="eroare" id="eroare-platforma"></p>
   </div>
 
-  <!-- 2 · instagram -->
+  <!-- 2 · profil -->
   <div class="pas" data-pas="2" hidden>
-    <div class="platforma"><span class="ico">📸</span><h2>Instagram</h2></div>
-    <p class="sub">Cum stai acum. Aproximările sunt în regulă.</p>
-    <label class="bifa nu-am"><input type="checkbox" name="fara_instagram"><span>Nu am cont de Instagram</span></label>
-    <div data-cont="instagram">
-      <div class="camp"><label for="instagram">Contul</label><input id="instagram" name="instagram" type="text" autocapitalize="off" placeholder="@contul sau instagram.com/contul"><p class="eroare"></p></div>
-      <div class="camp"><span class="eticheta">Câți urmăritori are, cam</span><div class="seg" data-alegere="ig_urmaritori" data-unul></div></div>
-      <div class="camp"><span class="eticheta">Cât de des postezi</span><div class="seg" data-alegere="ig_frecventa" data-unul></div></div>
-      <div class="camp"><span class="eticheta">Ce postezi <span class="opt">(bifează tot ce faci)</span></span><div class="chips" data-alegere="ig_formate"></div></div>
-      <div class="camp"><span class="eticheta">Cine se ocupă de cont</span><div class="seg" data-alegere="ig_cine" data-unul></div></div>
-    </div>
+    <h2>Profilul</h2>
+    <p class="sub" data-text="profil"></p>
+    <div class="zona" data-grup="profil"></div>
   </div>
 
-  <!-- 3 · tiktok -->
+  <!-- 3 · conținut -->
   <div class="pas" data-pas="3" hidden>
-    <div class="platforma"><span class="ico">🎵</span><h2>TikTok</h2></div>
-    <p class="sub">La fel, pe scurt.</p>
-    <label class="bifa nu-am"><input type="checkbox" name="fara_tiktok"><span>Nu am cont de TikTok</span></label>
-    <div data-cont="tiktok">
-      <div class="camp"><label for="tiktok">Contul</label><input id="tiktok" name="tiktok" type="text" autocapitalize="off" placeholder="@contul sau tiktok.com/@contul"><p class="eroare"></p></div>
-      <div class="camp"><span class="eticheta">Câți urmăritori are, cam</span><div class="seg" data-alegere="tt_urmaritori" data-unul></div></div>
-      <div class="camp"><span class="eticheta">Cât de des postezi</span><div class="seg" data-alegere="tt_frecventa" data-unul></div></div>
-      <div class="camp"><label for="tt_cel_mai_bun">Clipul tău cel mai văzut <span class="opt">(link, opțional)</span></label><input id="tt_cel_mai_bun" name="tt_cel_mai_bun" type="url" autocapitalize="off" placeholder="https://www.tiktok.com/@contul/video/..."></div>
-      <div class="camp"><span class="eticheta">Cine filmează</span><div class="seg" data-alegere="tt_cine" data-unul></div></div>
-    </div>
+    <h2>Conținutul</h2>
+    <p class="sub" data-text="continut"></p>
+    <div class="zona" data-grup="recente"></div>
+    <div class="zona" data-grup="bune"></div>
+    <div class="zona" data-grup="slabe"></div>
   </div>
 
-  <!-- 4 · ce vrei -->
+  <!-- 4 · contact -->
   <div class="pas" data-pas="4" hidden>
-    <h2>Ce vrei și ce te încurcă</h2>
-    <p class="sub">Aici se vede unde merită să lucrăm întâi.</p>
-    <div class="camp"><span class="eticheta">Ce vrei să obții <span class="opt">(cel mult 2)</span></span><div class="chips" data-alegere="obiective" data-max="2"></div><p class="eroare"></p></div>
-    <div class="camp"><span class="eticheta">Ce te încurcă acum <span class="opt">(oricâte)</span></span><div class="chips" data-alegere="blocaje"></div></div>
-    <div class="camp"><span class="eticheta">Dai bani pe reclame?</span><div class="seg" data-alegere="reclame" data-unul></div></div>
-    <div class="camp"><label for="client_ideal">Cine e clientul tău ideal <span class="opt">(în câteva cuvinte)</span></label><textarea id="client_ideal" name="client_ideal" maxlength="400" placeholder="ex. mame 28-40 de ani din oraș care vor un tuns rapid, fără programare cu săptămâni înainte"></textarea></div>
-    <div class="camp"><label for="concurenti">Conturi pe care le urmărești sau le invidiezi <span class="opt">(opțional)</span></label><input id="concurenti" name="concurenti" type="text" autocapitalize="off" placeholder="@concurent1, @concurent2"></div>
-  </div>
-
-  <!-- 5 · capturi -->
-  <div class="pas" data-pas="5" hidden>
-    <h2>Capturi din statistici</h2>
-    <p class="sub">Cea mai valoroasă parte: cifrele pe care doar tu le vezi. Fără ele auditul se face doar pe ce e public.</p>
-    <label class="zona" id="zona"><b>📎 Adaugă capturi de ecran</b><span class="mic">până la 6 imagini · le micșorăm automat</span><input type="file" id="fisiere" accept="image/png,image/jpeg,image/webp" multiple></label>
-    <div class="capturi" id="capturi"></div>
-    <div class="cum">
-      <p><b>Instagram:</b> Profil → Panou profesional → Statistici → ultimele 30 de zile (Conturi atinse + Interacțiuni + Urmăritori).</p>
-      <p><b>TikTok:</b> Profil → ☰ → Instrumente pentru creatori → Statistici → Prezentare generală și Urmăritori.</p>
-    </div>
-  </div>
-
-  <!-- 6 · final -->
-  <div class="pas" data-pas="6" hidden>
-    <h2>Ultimul pas</h2>
-    <p class="sub">Orice altceva ne ajută: o ofertă care merge, o perioadă grea, un termen.</p>
-    <div class="camp"><label for="altceva">Ce ar trebui să știm <span class="opt">(opțional)</span></label><textarea id="altceva" name="altceva" maxlength="1200"></textarea></div>
-    <label class="bifa" id="bifa-acord"><input type="checkbox" name="acord" required><span>Sunt de acord ca S&V Agency să folosească răspunsurile și capturile trimise ca să-mi pregătească auditul. Rămân în spațiul de lucru al agenției și nu sunt date mai departe.</span></label>
+    <h2>Unde îți trimitem auditul</h2>
+    <p class="sub">Atât de scris.</p>
+    <div class="camp"><label for="nume_persoana">Numele tău</label><input id="nume_persoana" name="nume_persoana" type="text" autocomplete="name" placeholder="ex. Andreea Popescu"><p class="eroare"></p></div>
+    <div class="camp"><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="nume@firma.ro"><p class="eroare"></p></div>
+    <label class="bifa" id="bifa-acord"><input type="checkbox" name="acord"><span>Sunt de acord ca S&V Agency să folosească numele, emailul și capturile trimise ca să-mi pregătească auditul. Rămân în spațiul de lucru al agenției și nu sunt date mai departe.</span></label>
     <p class="eroare" id="eroare-acord"></p>
+    <div class="incarcare" id="incarcare" hidden>
+      <div class="mic" id="incarcare-text">Se încarcă…</div>
+      <div class="bara"><span id="incarcare-bara"></span></div>
+    </div>
   </div>
 
   <!-- gata -->
   <div class="pas gata" data-pas="gata" hidden>
     <div class="bulina">✓</div>
     <h2>Am primit, mulțumim!</h2>
-    <p class="sub">Ne uităm pe conturi și pe capturi și îți trimitem auditul pe email.</p>
+    <p class="sub" id="gata-text">Ne uităm pe capturi și îți trimitem auditul pe email.</p>
     <ol>
-      <li>Analizăm profilul, conținutul și cifrele, pe fiecare platformă.</li>
-      <li>Îți scriem ce te trage în jos și ce schimbi primul — concret, în ordine.</li>
-      <li>Dacă vrei, discutăm 20 de minute despre pașii următori.</li>
+      <li>Analizăm profilul și postările, una câte una.</li>
+      <li>Comparăm ce a mers cu ce n-a mers și găsim de ce.</li>
+      <li>Îți scriem ce schimbi primul — concret, în ordine.</li>
     </ol>
+    <button type="button" class="btn btn-s" id="al-doilea"></button>
   </div>
 
   <div class="actiuni" id="actiuni" hidden>
@@ -207,91 +183,143 @@ input::placeholder,textarea::placeholder{color:var(--ink-3)}
   </div>
   </form>
 </section>
-<p class="mic" style="text-align:center;margin-top:16px">S&V Agency · răspunsurile ajung doar la noi</p>
+<p class="mic" style="text-align:center;margin-top:16px">S&V Agency · capturile ajung doar la noi</p>
 </main>
 <div class="toast" id="toast" role="status"></div>
 
 <script>
 (function () {
   "use strict";
-  // Unde se trimit răspunsurile: aplicația agenției de pe Vercel, care le pune în Google Drive.
+  // Aplicația agenției de pe Vercel primește capturile și le duce în Google Drive.
   var ADRESA = "https://sv-agency-eight.vercel.app/api/audit";
-  var CHEIE = "audit-sv:v1";
-  var ULTIMUL = 6;
+  var CHEIE = "audit-sv:v2";
+  var ULTIMUL = 4;
 
-  var ALEGERI = {
-    domeniu: [["stomatologie","🦷 Stomatologie"],["clinica-medicala","🩺 Clinică medicală"],["beauty","💇 Salon / beauty"],["restaurant","🍽️ Restaurant / cafenea"],["fitness","🏋️ Sală / fitness"],["auto","🚗 Service / auto"],["retail","🛍️ Magazin / e-commerce"],["imobiliare","🏡 Imobiliare"],["constructii","🛠️ Construcții"],["b2b","💼 Servicii B2B"],["educatie","🎓 Educație / cursuri"],["horeca-turism","🧳 Cazare / turism"],["altul","✳️ Altceva"]],
-    ig_urmaritori: [["sub-500","< 500"],["500-2k","500–2k"],["2k-10k","2k–10k"],["peste-10k","10k+"]],
-    tt_urmaritori: [["sub-500","< 500"],["500-2k","500–2k"],["2k-10k","2k–10k"],["peste-10k","10k+"]],
-    ig_frecventa: [["deloc","Deloc"],["rar","Rar"],["saptamanal","1-2 / săpt."],["des","3+ / săpt."]],
-    tt_frecventa: [["deloc","Deloc"],["rar","Rar"],["saptamanal","1-2 / săpt."],["des","3+ / săpt."]],
-    ig_formate: [["reels","🎬 Reels"],["carusele","🗂️ Carusele"],["poze","🖼️ Poze"],["stories","⭕ Stories"],["live","🔴 Live"]],
-    ig_cine: [["eu","Eu"],["firma","Cineva din firmă"],["agentie","O agenție"],["nimeni","Nimeni"]],
-    tt_cine: [["eu","Eu"],["firma","Cineva din firmă"],["agentie","O agenție"],["nimeni","Nimeni"]],
-    obiective: [["leads","📈 Mai mulți clienți noi"],["sales","🛒 Mai multe vânzări online"],["awareness","📍 Să fim cunoscuți în zonă"],["reviews","⭐ Mai multe recenzii"],["retention","🔁 Clienții vechi să revină"],["recrutare","🤝 Să găsim angajați"],["lansare","🚀 Lansăm ceva nou"]],
-    blocaje: [["timp","⏳ Nu am timp"],["idei","💭 Nu știu ce să postez"],["fara-clienti","🔇 Postez, dar nu vin clienți"],["video","🎬 Nu mă descurc cu video"],["reclame","💸 Reclamele nu aduc nimic"],["consecventa","🔋 Încep și mă opresc"],["concurenta","🥊 Concurența e mai vizibilă"],["raspunsuri","💬 Nu apuc să răspund la mesaje"],["crestere","📉 Nu cresc urmăritorii"]],
-    reclame: [["nu","Nu"],["sub-500","< 500 lei/lună"],["500-2000","500–2000"],["peste-2000","2000+"]]
+  var GRUPURI = {
+    profil:  { max: 3,  min: 1, titlu: "Captura profilului" },
+    recente: { max: 10, min: 1, titlu: "Ultimele 10 postări" },
+    bune:    { max: 5,  min: 0, titlu: "Cele mai bune 3–5" },
+    slabe:   { max: 4,  min: 0, titlu: "Cele mai slabe 3–4" }
+  };
+  var TEXTE = {
+    instagram: {
+      profil: "O captură cu profilul, de sus: poza, bio, poveștile salvate și primele postări. Dacă ai mai mult de 5 povești salvate, mai fă 1–2 capturi derulând prin ele.",
+      continut: "Câte o captură din fiecare postare — să se vadă postarea, data și aprecierile. Din ele vedem frecvența, ce publici, ce merge și ce nu.",
+      recente: "De la cea mai nouă, în ordine. Din ele se vede cât de des și ce postezi.",
+      bune: "Cele cu cele mai multe vizualizări sau aprecieri. Le găsești în Panou profesional → Statistici → Conținut, ordonat după acoperire.",
+      slabe: "Cele cu cele mai puține vizualizări. Tot din Statistici → Conținut, de la coada listei.",
+      celalalt: "tiktok", nume: "Instagram"
+    },
+    tiktok: {
+      profil: "O captură cu profilul, de sus: poza, bio, clipurile fixate și primele clipuri.",
+      continut: "Câte o captură din fiecare clip — să se vadă clipul și vizualizările. Din ele vedem cât de des postezi, ce merge și ce nu.",
+      recente: "De la cel mai nou, în ordine. Din ele se vede ritmul și ce postezi.",
+      bune: "Clipurile cu cele mai multe vizualizări. Pe profil apasă „Populare”, sau Instrumente pentru creatori → Statistici → Conținut.",
+      slabe: "Clipurile cu cele mai puține vizualizări din ultimele luni.",
+      celalalt: "instagram", nume: "TikTok"
+    }
   };
 
   var f = document.getElementById("f");
   var pasi = [].slice.call(document.querySelectorAll(".pas"));
   var actiuni = document.getElementById("actiuni");
   var inainte = document.getElementById("inainte");
-  var inapoi = document.getElementById("inapoi");
   var progres = document.getElementById("progres");
   var bara = document.getElementById("bara");
   var curent = 0;
   var r = {};
-  var capturi = [];   // {nume, tip, date, previzualizare}
+  var capturi = { profil: [], recente: [], bune: [], slabe: [] };
 
+  // ce s-a scris (nume, email, platformă) rămâne în telefon dacă omul închide pagina; capturile nu
   try { r = JSON.parse(localStorage.getItem(CHEIE) || "{}") || {}; } catch (e) { r = {}; }
-  function salveaza() { try { localStorage.setItem(CHEIE, JSON.stringify(r)); } catch (e) {} }
+  function salveaza() { try { localStorage.setItem(CHEIE, JSON.stringify({ nume_persoana: r.nume_persoana, email: r.email, platforma: r.platforma })); } catch (e) {} }
 
-  // --- alegeri (chips și segmente) ---
-  [].forEach.call(document.querySelectorAll("[data-alegere]"), function (box) {
-    var cheie = box.getAttribute("data-alegere");
-    var unul = box.hasAttribute("data-unul");
-    var max = parseInt(box.getAttribute("data-max") || "0", 10);
-    (ALEGERI[cheie] || []).forEach(function (o) {
-      var b = document.createElement("button");
-      b.type = "button"; b.className = box.classList.contains("seg") ? "" : "chip";
-      b.textContent = o[1]; b.setAttribute("data-v", o[0]);
-      var ales = unul ? r[cheie] === o[0] : (r[cheie] || []).indexOf(o[0]) > -1;
-      b.setAttribute("aria-pressed", ales ? "true" : "false");
-      b.addEventListener("click", function () {
-        if (unul) {
-          r[cheie] = o[0];
-          [].forEach.call(box.children, function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
-        } else {
-          var lista = r[cheie] || [];
-          var i = lista.indexOf(o[0]);
-          if (i > -1) lista.splice(i, 1);
-          else { if (max && lista.length >= max) { arata("Alege cel mult " + max + "."); return; } lista.push(o[0]); }
-          r[cheie] = lista;
-          b.setAttribute("aria-pressed", i > -1 ? "false" : "true");
-        }
-        box.closest(".camp").classList.remove("invalid");
-        salveaza();
-      });
-      box.appendChild(b);
+  // --- platforma ---
+  [].forEach.call(document.querySelectorAll("[data-platforma]"), function (b) {
+    b.addEventListener("click", function () { alegePlatforma(b.getAttribute("data-platforma")); });
+  });
+  function alegePlatforma(p) {
+    r.platforma = p; salveaza();
+    [].forEach.call(document.querySelectorAll("[data-platforma]"), function (x) {
+      x.setAttribute("aria-pressed", x.getAttribute("data-platforma") === p ? "true" : "false");
     });
+    document.getElementById("eroare-platforma").textContent = "";
+    var t = TEXTE[p];
+    document.querySelector('[data-text="profil"]').textContent = t.profil;
+    document.querySelector('[data-text="continut"]').textContent = t.continut;
+    Object.keys(GRUPURI).forEach(function (g) { var ce = document.querySelector('[data-grup="' + g + '"] .ce'); if (ce && t[g]) ce.textContent = t[g]; });
+  }
+
+  // --- zonele de capturi ---
+  Object.keys(GRUPURI).forEach(function (g) {
+    var z = document.querySelector('[data-grup="' + g + '"]');
+    var cfg = GRUPURI[g];
+    z.innerHTML = '<div class="zona-cap"><h3>' + cfg.titlu + '</h3><span class="contor"></span></div>' +
+      (g === "profil" ? "" : '<p class="ce"></p>') +
+      '<label class="adauga">＋ Adaugă capturi<input type="file" accept="image/png,image/jpeg,image/webp" multiple></label>' +
+      '<div class="capturi"></div><p class="eroare"></p>';
+    z.querySelector("input").addEventListener("change", function (e) {
+      var fisiere = [].slice.call(e.target.files || []);
+      e.target.value = "";
+      var loc = cfg.max - capturi[g].length;
+      if (fisiere.length > loc) arata("Aici încap cel mult " + cfg.max + ". Le-am păstrat pe primele.");
+      fisiere.slice(0, Math.max(0, loc)).reduce(function (lant, fis) {
+        return lant.then(function () { return micsoreaza(fis).then(function (c) { capturi[g].push(c); deseneaza(g); }); })
+          .catch(function () { arata("Nu am putut citi „" + fis.name + "”."); });
+      }, Promise.resolve());
+    });
+    deseneaza(g);
   });
 
-  // --- câmpuri text și bife ---
-  [].forEach.call(f.querySelectorAll("input[name]:not([type=checkbox]), textarea[name]"), function (el) {
-    if (el.name === "site_web") return;
-    if (r[el.name] != null) el.value = r[el.name];
-    el.addEventListener("input", function () { r[el.name] = el.value; el.closest(".camp") && el.closest(".camp").classList.remove("invalid"); salveaza(); });
-  });
-  [].forEach.call(f.querySelectorAll("input[type=checkbox][name]"), function (el) {
-    el.checked = !!r[el.name];
-    el.addEventListener("change", function () { r[el.name] = el.checked; salveaza(); comuta(); });
-  });
-  function comuta() {
-    document.querySelector('[data-cont="instagram"]').hidden = !!r.fara_instagram;
-    document.querySelector('[data-cont="tiktok"]').hidden = !!r.fara_tiktok;
+  function deseneaza(g) {
+    var z = document.querySelector('[data-grup="' + g + '"]');
+    var cfg = GRUPURI[g];
+    z.querySelector(".contor").textContent = capturi[g].length + " / " + cfg.max;
+    z.querySelector(".adauga").classList.toggle("plin", capturi[g].length >= cfg.max);
+    if (capturi[g].length) { z.classList.remove("invalid"); z.querySelector(".eroare").textContent = ""; }
+    var box = z.querySelector(".capturi");
+    box.innerHTML = "";
+    capturi[g].forEach(function (c, i) {
+      var d = document.createElement("div"); d.className = "captura";
+      var im = document.createElement("img"); im.src = c.previzualizare; im.alt = c.nume;
+      var n = document.createElement("b"); n.textContent = i + 1;
+      var x = document.createElement("button"); x.type = "button"; x.textContent = "×"; x.setAttribute("aria-label", "Scoate captura " + (i + 1));
+      x.addEventListener("click", function () { capturi[g].splice(i, 1); deseneaza(g); });
+      d.appendChild(im); d.appendChild(n); d.appendChild(x); box.appendChild(d);
+    });
   }
-  comuta();
+
+  // capturile se micșorează în telefon: textul (data, aprecierile) rămâne citibil, fișierul urcă repede
+  function micsoreaza(fis) {
+    return new Promise(function (ok, nu) {
+      var url = URL.createObjectURL(fis);
+      var img = new Image();
+      img.onload = function () {
+        var latura = 1600, calitate = 0.82, rezultat = null;
+        for (var i = 0; i < 4; i++) {
+          var s = Math.min(1, latura / Math.max(img.width, img.height));
+          var c = document.createElement("canvas");
+          c.width = Math.round(img.width * s); c.height = Math.round(img.height * s);
+          c.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
+          rezultat = c.toDataURL("image/jpeg", calitate);
+          if (rezultat.length * 0.75 < 1200000) break;
+          latura = Math.round(latura * 0.85); calitate -= 0.08;
+        }
+        URL.revokeObjectURL(url);
+        ok({ nume: fis.name, tip: "image/jpeg", date: rezultat.split(",")[1], previzualizare: rezultat });
+      };
+      img.onerror = function () { URL.revokeObjectURL(url); nu(); };
+      img.src = url;
+    });
+  }
+
+  // --- câmpurile de contact ---
+  ["nume_persoana", "email"].forEach(function (k) {
+    var el = f[k];
+    if (r[k]) el.value = r[k];
+    el.addEventListener("input", function () { r[k] = el.value; el.closest(".camp").classList.remove("invalid"); salveaza(); });
+  });
+  f.acord.addEventListener("change", function () { r.acord = f.acord.checked; document.getElementById("bifa-acord").classList.remove("invalid"); document.getElementById("eroare-acord").textContent = ""; });
 
   // --- navigare ---
   function arataPas(i) {
@@ -308,116 +336,114 @@ input::placeholder,textarea::placeholder{color:var(--ink-3)}
     window.scrollTo(0, 0);
   }
 
-  function eroare(camp, mesaj) {
-    var c = camp.closest(".camp") || camp;
-    c.classList.add("invalid");
-    var p = c.querySelector(".eroare");
-    if (p) p.textContent = mesaj;
+  function lipsa(g, mesaj) {
+    var z = document.querySelector('[data-grup="' + g + '"]');
+    z.classList.add("invalid"); z.querySelector(".eroare").textContent = mesaj;
+    z.scrollIntoView({ block: "center" });
     return false;
   }
 
   function valid(i) {
-    [].forEach.call(document.querySelectorAll(".invalid"), function (x) { x.classList.remove("invalid"); var p = x.querySelector(".eroare"); if (p) p.textContent = ""; });
-    if (i === 1) {
+    if (i === 1 && !r.platforma) { document.getElementById("eroare-platforma").textContent = "Alege una dintre ele."; return false; }
+    if (i === 2 && !capturi.profil.length) return lipsa("profil", "Pune măcar o captură cu profilul.");
+    if (i === 3 && !capturi.recente.length) return lipsa("recente", "Pune măcar câteva dintre ultimele postări — din ele se vede ritmul.");
+    if (i === 4) {
       var ok = true;
-      if (!(r.nume_persoana || "").trim()) ok = eroare(f.nume_persoana, "Spune-ne cum te cheamă.");
-      if (!/^[^@\s]+@[^@\s]+\.[a-z]{2,}$/i.test((r.email || "").trim())) ok = eroare(f.email, "Adresa de email nu pare corectă.");
+      if (!(r.nume_persoana || "").trim()) { f.nume_persoana.closest(".camp").classList.add("invalid"); f.nume_persoana.closest(".camp").querySelector(".eroare").textContent = "Spune-ne cum te cheamă."; ok = false; }
+      if (!/^[^@\s]+@[^@\s]+\.[a-z]{2,}$/i.test((r.email || "").trim())) { f.email.closest(".camp").classList.add("invalid"); f.email.closest(".camp").querySelector(".eroare").textContent = "Adresa de email nu pare corectă."; ok = false; }
+      if (!f.acord.checked) { document.getElementById("bifa-acord").classList.add("invalid"); document.getElementById("eroare-acord").textContent = "Fără acordul tău nu putem pregăti auditul."; ok = false; }
       return ok;
-    }
-    if (i === 3 && r.fara_instagram && r.fara_tiktok) { arata("Ca să facem auditul, ne trebuie cel puțin un cont."); return false; }
-    if (i === 2 && !r.fara_instagram && !(r.instagram || "").trim()) return eroare(f.instagram, "Pune contul sau bifează că nu ai.");
-    if (i === 3 && !r.fara_tiktok && !(r.tiktok || "").trim()) return eroare(f.tiktok, "Pune contul sau bifează că nu ai.");
-    if (i === ULTIMUL && !r.acord) {
-      document.getElementById("bifa-acord").classList.add("invalid");
-      document.getElementById("eroare-acord").textContent = "Fără acordul tău nu putem pregăti auditul.";
-      return false;
     }
     return true;
   }
 
-  document.querySelector("[data-urmator]").addEventListener("click", function () { arataPas(1); });
-  inapoi.addEventListener("click", function () { if (curent > 1) arataPas(curent - 1); else arataPas(0); });
+  document.getElementById("incepe").addEventListener("click", function () { arataPas(1); });
+  document.getElementById("inapoi").addEventListener("click", function () { arataPas(curent > 1 ? curent - 1 : 0); });
   f.addEventListener("submit", function (e) {
     e.preventDefault();
     if (!valid(curent)) return;
-    if (curent < ULTIMUL) arataPas(curent + 1); else trimite();
+    if (curent < ULTIMUL) {
+      if (curent === 3) {
+        var putine = capturi.recente.length < 10 && !capturi.bune.length && !capturi.slabe.length;
+        if (putine) arata("Merge și așa. Cu cele mai bune și cele mai slabe, auditul iese mult mai precis.");
+      }
+      arataPas(curent + 1);
+    } else trimite();
   });
 
-  // --- capturi: le micșorăm în telefon, ca să urce repede și să încapă în limită ---
-  document.getElementById("fisiere").addEventListener("change", function (e) {
-    var noi = [].slice.call(e.target.files || []);
-    e.target.value = "";
-    noi.slice(0, Math.max(0, 6 - capturi.length)).forEach(function (fis) {
-      micsoreaza(fis).then(function (c) { if (c) { capturi.push(c); deseneaza(); } })
-        .catch(function () { arata("Nu am putut citi „" + fis.name + "”."); });
-    });
-    if (capturi.length + noi.length > 6) arata("Am păstrat primele 6 capturi.");
-  });
-
-  function micsoreaza(fis) {
-    return new Promise(function (ok, nu) {
-      var url = URL.createObjectURL(fis);
-      var img = new Image();
-      img.onload = function () {
-        var latura = 1600, calitate = 0.82, rezultat = null;
-        for (var incercare = 0; incercare < 4; incercare++) {
-          var s = Math.min(1, latura / Math.max(img.width, img.height));
-          var c = document.createElement("canvas");
-          c.width = Math.round(img.width * s); c.height = Math.round(img.height * s);
-          c.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
-          rezultat = c.toDataURL("image/jpeg", calitate);
-          if (rezultat.length * 0.75 < 850000) break;
-          latura = Math.round(latura * 0.8); calitate -= 0.08;
-        }
-        URL.revokeObjectURL(url);
-        ok({ nume: fis.name, tip: "image/jpeg", date: rezultat.split(",")[1], previzualizare: rezultat });
-      };
-      img.onerror = function () { URL.revokeObjectURL(url); nu(); };
-      img.src = url;
+  // --- trimiterea: întâi datele, apoi capturile una câte una, apoi închiderea ---
+  function cerere(url, corp, cheie) {
+    var antete = { "Content-Type": "application/json" };
+    if (cheie) antete["X-Cheie"] = cheie;
+    return fetch(url, { method: "POST", headers: antete, body: JSON.stringify(corp) })
+      .then(function (res) { return res.json().catch(function () { return {}; }).then(function (d) { return { ok: res.ok, status: res.status, d: d }; }); });
+  }
+  function cuReincercare(fn, ramase) {
+    return fn().then(function (x) {
+      if (x.ok || ramase <= 0 || (x.status >= 400 && x.status < 500)) return x;
+      return new Promise(function (ok) { setTimeout(ok, 1500); }).then(function () { return cuReincercare(fn, ramase - 1); });
+    }, function (err) {
+      if (ramase <= 0) throw err;
+      return new Promise(function (ok) { setTimeout(ok, 1500); }).then(function () { return cuReincercare(fn, ramase - 1); });
     });
   }
 
-  function deseneaza() {
-    var box = document.getElementById("capturi");
-    box.innerHTML = "";
-    capturi.forEach(function (c, i) {
-      var d = document.createElement("div"); d.className = "captura";
-      var im = document.createElement("img"); im.src = c.previzualizare; im.alt = c.nume;
-      var x = document.createElement("button"); x.type = "button"; x.textContent = "×"; x.setAttribute("aria-label", "Scoate captura");
-      x.addEventListener("click", function () { capturi.splice(i, 1); deseneaza(); });
-      d.appendChild(im); d.appendChild(x); box.appendChild(d);
-    });
-  }
-
-  // --- trimitere ---
   function trimite() {
+    var lista = [];
+    Object.keys(GRUPURI).forEach(function (g) { capturi[g].forEach(function (c, i) { lista.push({ grup: g, nr: i + 1, c: c }); }); });
+    var total = lista.length, facute = 0;
+    var txt = document.getElementById("incarcare-text"), b = document.getElementById("incarcare-bara");
+    function stadiu() { txt.textContent = facute < total ? "Se încarcă captura " + (facute + 1) + " din " + total + "…" : "Se închide trimiterea…"; b.style.width = (facute / Math.max(1, total) * 100) + "%"; }
     inainte.disabled = true; inainte.textContent = "Se trimite…";
-    var raspunsuri = {};
-    Object.keys(r).forEach(function (k) { raspunsuri[k] = r[k]; });
-    raspunsuri.acord = r.acord === true;
-    var corp = { raspunsuri: raspunsuri, site_web: f.site_web.value,
-                 imagini: capturi.map(function (c) { return { nume: c.nume, tip: c.tip, date: c.date }; }) };
-    fetch(ADRESA, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(corp) })
-      .then(function (res) { return res.json().catch(function () { return {}; }).then(function (d) { return { res: res, d: d }; }); })
+    document.getElementById("incarcare").hidden = false; stadiu();
+
+    var raspunsuri = { nume_persoana: (r.nume_persoana || "").trim(), email: (r.email || "").trim(), platforma: r.platforma, acord: true };
+    cerere(ADRESA + "?pas=start", { raspunsuri: raspunsuri, site_web: f.site_web.value })
       .then(function (x) {
-        if (x.res.ok) { try { localStorage.removeItem(CHEIE); } catch (e) {} arataPas("gata"); return; }
-        if (x.res.status === 422 && x.d.erori) {
-          if (x.d.erori.nume_persoana || x.d.erori.email) arataPas(1);
-          valid(curent);
-        }
-        arata(x.d.detail || "Nu am putut trimite acum. Răspunsurile rămân salvate — încearcă din nou.");
+        if (!x.ok) throw { mesaj: x.d.detail || "Nu am putut trimite acum." };
+        var id = x.d.id, cheie = x.d.cheie;
+        return lista.reduce(function (lant, it) {
+          return lant.then(function () {
+            return cuReincercare(function () {
+              return cerere(ADRESA + "?pas=imagine&id=" + encodeURIComponent(id), { grup: it.grup, nr: it.nr, tip: it.c.tip, date: it.c.date }, cheie);
+            }, 2).then(function (y) {
+              if (!y.ok) throw { mesaj: y.d.detail || "O captură n-a putut fi încărcată." };
+              facute++; stadiu();
+            });
+          });
+        }, Promise.resolve()).then(function () {
+          return cuReincercare(function () { return cerere(ADRESA + "?pas=gata&id=" + encodeURIComponent(id), {}, cheie); }, 2);
+        });
       })
-      .catch(function () { arata("Fără conexiune. Răspunsurile rămân salvate — încearcă din nou."); })
-      .then(function () { inainte.disabled = false; if (curent === ULTIMUL) inainte.textContent = "Trimite"; });
+      .then(function (z) {
+        if (!z.ok) throw { mesaj: z.d.detail || "Nu am putut închide trimiterea." };
+        var t = TEXTE[r.platforma];
+        document.getElementById("gata-text").textContent = "Ne uităm pe capturile tale de " + t.nume + " și îți trimitem auditul pe email.";
+        var al2 = document.getElementById("al-doilea");
+        al2.textContent = "Ai și " + TEXTE[t.celalalt].nume + "? Trimite-l și pe el →";
+        al2.setAttribute("data-alt", t.celalalt);
+        arataPas("gata");
+      })
+      .catch(function (err) { arata((err && err.mesaj) || "Fără conexiune. Încearcă din nou — capturile sunt încă aici."); })
+      .then(function () { inainte.disabled = false; if (curent === ULTIMUL) inainte.textContent = "Trimite"; document.getElementById("incarcare").hidden = true; });
   }
+
+  // al doilea cont: păstrăm numele și emailul, golim capturile
+  document.getElementById("al-doilea").addEventListener("click", function () {
+    Object.keys(capturi).forEach(function (g) { capturi[g] = []; deseneaza(g); });
+    alegePlatforma(this.getAttribute("data-alt"));
+    f.acord.checked = false;
+    arataPas(2);
+  });
 
   var tTimer;
   function arata(mesaj) {
     var t = document.getElementById("toast");
     t.textContent = mesaj; t.classList.add("arata");
-    clearTimeout(tTimer); tTimer = setTimeout(function () { t.classList.remove("arata"); }, 3800);
+    clearTimeout(tTimer); tTimer = setTimeout(function () { t.classList.remove("arata"); }, 4200);
   }
 
+  if (r.platforma) alegePlatforma(r.platforma);
   arataPas(0);
 })();
 </script>
